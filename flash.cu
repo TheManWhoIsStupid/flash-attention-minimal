@@ -68,7 +68,7 @@ void forward_kernel(const float* Q, const float* K, const float* V, const int N,
             for (int x = 0; x < d; x++) {
                 float pv = 0;  // Pij * Vj
                 for (int y = 0; y < Bc; y++) {
-                    pv += S[(Bc * tx) + y] * Vj[(y * d) + x];
+                    pv += S[(Bc * tx) + y] * Vj[(y * d) + x] / row_l_new;
                 }
                 O[qkv_offset + (tile_size * i) + (tx * d) + x] = (1 / row_l_new) \
                     * ((row_l_prev * __expf(row_m_prev - row_m_new) * O[qkv_offset + (tile_size * i) + (tx * d) + x]) \
